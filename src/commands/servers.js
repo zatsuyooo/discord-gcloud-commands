@@ -88,7 +88,7 @@ module.exports = class ServersCommand extends SlashCommand {
               // "zone": vm.zone.name,
               // "Internal IP": vm.metadata.networkInterfaces[0].networkIP,
               // "external IP": extIp,
-              "status": this.vmStatus(vm)
+              "status": vm.metadata.status
             }
             console.log(row);
             table.push(row);
