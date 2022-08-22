@@ -85,10 +85,10 @@ module.exports = class ServersCommand extends SlashCommand {
             var extIp = ( vm.metadata.networkInterfaces[0].accessConfigs == undefined )? "N/A" : vm.metadata.networkInterfaces[0].accessConfigs[0].natIP;
             var row = {
               "name": vm.name,
-              "zone": vm.zone.name,
+              // "zone": vm.zone.name,
               // "Internal IP": vm.metadata.networkInterfaces[0].networkIP,
-              "external IP": extIp,
-              "status": vm.metadata.status
+              // "external IP": extIp,
+              "status": this.vmStatus(vm)
             }
             console.log(row);
             table.push(row);
