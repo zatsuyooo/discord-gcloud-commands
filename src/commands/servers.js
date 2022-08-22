@@ -4,7 +4,6 @@ const Compute = require('@google-cloud/compute');
 const compute = new Compute();
 
 const USER_ROLE_ID = process.env.USER_ROLE_ID || '789184783942549545';
-const MANAGER_ROLE_ID = process.env.MANAGER_ROLE_ID || '789078608236511252';
 const DEFAULT_COMPUTE_ZONE = process.env.DEFAULT_COMPUTE_ZONE || 'us-west2-a';
 
 const PRESENT_VERBS = {
@@ -74,7 +73,7 @@ module.exports = class ServersCommand extends SlashCommand {
   async run(ctx) {
     var subcommand = ctx.subcommands[0];
 
-    if (subcommand == "list" && (ctx.member.roles.includes(USER_ROLE_ID) || ctx.member.roles.includes(MANAGER_ROLE_ID))) {
+    if (subcommand == "list" && (ctx.member.roles.includes(USER_ROLE_ID))) {
       await ctx.acknowledge(true);
       var table = [];
       compute.getVMs((err, vms) => {
@@ -101,7 +100,7 @@ module.exports = class ServersCommand extends SlashCommand {
       });
     }
 
-    else if ((subcommand == "start" || subcommand == "stop") && (ctx.member.roles.includes(USER_ROLE_ID) || ctx.member.roles.includes(MANAGER_ROLE_ID))) {
+    else if ((subcommand == "start" || subcommand == "stop") && (ctx.member.roles.includes(USER_ROLE_ID))) {
       await ctx.acknowledge(true);
       const zoneName = (ctx.options[subcommand].zone == undefined)? DEFAULT_COMPUTE_ZONE : ctx.options[subcommand].zone;
       const zone = compute.zone(zoneName);
