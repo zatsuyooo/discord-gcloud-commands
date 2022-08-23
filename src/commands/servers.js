@@ -7,12 +7,12 @@ const USER_ROLE_ID = process.env.USER_ROLE_ID || '789184783942549545';
 const DEFAULT_COMPUTE_ZONE = process.env.DEFAULT_COMPUTE_ZONE || 'us-west2-a';
 
 const PRESENT_VERBS = {
-  start: "Starting",
-  stop: "Stopping"
+  start: "起動中",
+  stop: "停止中"
 }
 const PAST_VERBS = {
-  start: "Started",
-  stop: "Stopped"
+  start: "起動完了！",
+  stop: "停止完了！"
 }
 
 module.exports = class ServersCommand extends SlashCommand {
@@ -112,11 +112,11 @@ module.exports = class ServersCommand extends SlashCommand {
           ctx.send( "```" + err.errors[0].message + " (" + err.code + ")```");
         }
         else {
-          var message = PRESENT_VERBS[subcommand] + " " + vm.name + "...";
+          var message = vm.name + " " + PRESENT_VERBS[subcommand] + "...";
           console.log(message);
           ctx.send("```" + message + "```");
           operation.on('complete', (metadata) => {
-            var message = PAST_VERBS[subcommand] + " " + vm.name + "!";
+            var message = vm.name + " " + PAST_VERBS[subcommand];
             console.log(message);
             ctx.send("```" + message + "```");
           });
